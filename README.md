@@ -4,12 +4,24 @@ Download the training dataset `LiQA_training_data.zip` and validation dataset `L
 
 
 ### 2. Environment Setup
-Prepare an environment with Python 3.10 first, then install dependencies using the command `pip install -r requirements.txt`. Run the following commands sequentially:
+Run the following commands sequentially:
 ```bash
+# Create and activate the conda environment
 conda create -n 34lifs python=3.10 -y
 conda activate 34lifs
 cd 34-LiFS
-pip install -r requirements.txt
+
+# Install PyTorch, CUDA, and related packages via conda
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia -y
+
+# Install data processing & image-related packages via conda
+conda install pandas scikit-learn scikit-image SimpleITK -y
+
+# Install remaining dependencies via pip
+pip install tensorboardX
+pip3 install opencv-python
+pip3 install matplotlib
+pip3 install 'numpy<2' --force-reinstall
 ```
 
 
