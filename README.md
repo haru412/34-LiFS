@@ -27,7 +27,7 @@ pip install -r requirements.txt
 #### 4.1 Train the Substantial Fibrosis Detection Model (S1 vs. S2–S4)
 Run the following command to train the classification model for Substantial Fibrosis Detection (S1 vs. S2–S4):
 ```bash
-python train.py --bs 4 (batch size = 4) --epoch 200 (number of epochs = 200) --seed 42 (random seed = 42)
+python train.py --bs 4 --epoch 200 --seed 42
 ```
 
 #### 4.2 Train the Cirrhosis Detection Model (S1–S3 vs. S4)
@@ -40,7 +40,7 @@ Alternatively, you can download the two pre-trained model zip files via the foll
 
 
 ### 5. Model Testing
-1. Prepare `val.txt` in the `relevant_files` folder (this file contains Case ID information; we provide `val.txt` for the competition test set). 
+1. Prepare `val.txt` in the `relevant_files` folder (this file contains Case ID information; we provide `val.txt` for the competition validation set). 
    - If you use other test sets, refer to `./data/val_data.py` and `preprocessing_val.py` to process the test set, save it in a new folder, and prepare the corresponding `.txt` file.
 2. Ensure `data_dir` and `val_split_path` in `test.py` are correctly configured. If other test sets are used, further modify the output path (e.g., create a new `test_results` folder in `./results/` and update the path accordingly).
 3. Run the following three commands sequentially. They will output result files for the two tasks separately, as well as a combined result file for both tasks:
