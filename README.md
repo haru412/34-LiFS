@@ -1,0 +1,50 @@
+## Usage
+### 1. Download Data
+Download the training dataset `LiQA_training_data.zip` and validation dataset `LiQA_val.zip`, then unzip them.
+
+
+### 2. Environment Setup
+Prepare an environment with Python 3.10 first, then install dependencies using the command `pip install -r requirements.txt`. Run the following commands sequentially:
+```bash
+conda create -n 34lifs python=3.10 -y
+conda activate 34lifs
+cd 34-LiFS
+pip install -r requirements.txt
+```
+
+
+### 3. Data Preprocessing
+1. Copy the unzipped `LiQA_training_data` and `LiQA_val` to the designated path and rename them. Refer to `./data/train_data.py` and `./data/val_data.py`, replace `SOURCE_ROOT` with the actual input data path. The output data will be saved in `./data/train/` and `./data/val/`.
+2. Preprocess the training and validation datasets by running the following commands:
+   ```bash
+   python preprocessing_train.py
+   python preprocessing_val.py
+   ```
+3. The preprocessed training and validation datasets will be saved in `./data/preprocessed_train/` and `./data/preprocessed_val/` respectively.
+
+
+### 4. Model Training
+#### 4.1 Train the Substantial Fibrosis Detection Model (S1 vs. S2–S4)
+Run the following command to train the classification model for Substantial Fibrosis Detection (S1 vs. S2–S4):
+```bash
+python train.py --bs 4 (batch size = 4) --epoch 200 (number of epochs = 200) --seed 42 (random seed = 42)
+```
+
+#### 4.2 Train the Cirrhosis Detection Model (S1–S3 vs. S4)
+After the above training is completed, modify `S1` to `S4` in `metadata_path` and `save_dir` in `train.py`, then run the same command again to train the classification model for Cirrhosis Detection (S1–S3 vs. S4).
+
+#### 4.3 Alternative: Use Pre-trained Models
+Alternatively, you can download the two pre-trained model zip files via the link below, place them in the `./trained_models/` path, and unzip them.
+
+
+### 5. Model Testing
+1. Prepare `val.txt` in the `relevant_files` folder (this file contains Case ID information; we provide `val.txt` for the competition test set). 
+   - If you use other test sets, refer to `./data/val_data.py` and `preprocessing_val.py` to process the test set, save it in a new folder, and prepare the corresponding `.txt` file.
+2. Ensure `data_dir` and `val_split_path` in `test.py` are correctly configured. If other test sets are used, further modify the output path (e.g., create a new `test_results` folder in `./results/` and update the path accordingly).
+3. Run the following three commands sequentially. They will output result files for the two tasks separately, as well as a combined result file for both tasks:
+   ```bash
+   python test.py --task S4
+   python test.py --task S4
+   python pred_csv.py
+   ```
+4. Output results are saved in the `results` folder.
